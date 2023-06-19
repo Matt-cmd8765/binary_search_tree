@@ -32,7 +32,7 @@ class Tree
     pretty_print(node.left_child, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left_child
   end
 
-  def insert(node,key)
+  def insert(node, key)
     return Node.new(key) if node.nil?
 
     if key < node.data
@@ -43,7 +43,7 @@ class Tree
     node
   end
 
-  def delete(node,key)
+  def delete(node, key)
     return node if node.nil?
 
     if node.data > key
@@ -54,11 +54,9 @@ class Tree
       node
     elsif node.left_child.nil?
       temp = node.right_child
-      node = nil
       temp
     elsif node.right_child.nil?
       temp = node.left_child
-      node = nil
       temp
     else
       succ_parent = node
@@ -74,12 +72,22 @@ class Tree
       end
     end
   end
+
+  def find(node, value)
+    return node if node.data == value
+
+    if value < node.data
+      find(node.left_child, value)
+
+    elsif value > node.data
+      find(node.right_child, value)
+    end
+  end
 end
 
 arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 
 tree = Tree.new(arr)
 tree.insert(tree.root, 30)
-tree.delete(tree.root, 5)
-
-tree.pretty_print
+tree.delete(tree.root, 3)
+p tree.find(tree.root, 67)
