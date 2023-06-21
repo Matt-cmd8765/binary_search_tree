@@ -83,11 +83,36 @@ class Tree
       find(node.right_child, value)
     end
   end
+
+  def level_order(root)
+    return if root.nil?
+    
+    queue = []
+    queue.push(root)
+
+    while queue.length > 0
+      data = queue[0].data
+      puts data
+
+      if !queue[0].left_child.nil?
+        queue.push(queue[0].left_child)
+      end
+
+      if !queue[0].right_child.nil?
+        queue.push(queue[0].right_child)
+      end
+      queue.shift
+    end
+  end
 end
 
 arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 
 tree = Tree.new(arr)
-tree.insert(tree.root, 30)
-tree.delete(tree.root, 3)
-p tree.find(tree.root, 67)
+tree.pretty_print
+
+p tree.level_order(tree.root)
+
+# tree.insert(tree.root, 30)
+# tree.delete(tree.root, 3)
+# p tree.find(tree.root, 67)
