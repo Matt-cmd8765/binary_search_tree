@@ -84,15 +84,18 @@ class Tree
     end
   end
 
-  def level_order(root)
-    return if root.nil?
-    
-    queue = []
-    queue.push(root)
+  def level_order
 
+    queue = [@root]
+    result = []
+    
     while queue.length > 0
-      data = queue[0].data
-      puts data
+
+      if block_given?
+        yield queue[0]
+      else
+        result << queue[0].data
+      end
 
       if !queue[0].left_child.nil?
         queue.push(queue[0].left_child)
@@ -101,8 +104,10 @@ class Tree
       if !queue[0].right_child.nil?
         queue.push(queue[0].right_child)
       end
+
       queue.shift
     end
+    result unless result.empty?
   end
 end
 
@@ -111,7 +116,7 @@ arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 tree = Tree.new(arr)
 tree.pretty_print
 
-p tree.level_order(tree.root)
+tree.level_order { |node| puts node.data}
 
 # tree.insert(tree.root, 30)
 # tree.delete(tree.root, 3)
