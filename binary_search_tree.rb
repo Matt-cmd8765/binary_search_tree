@@ -109,15 +109,26 @@ class Tree
     end
     result unless result.empty?
   end
+
+  def inorder(tree = @root, arr = [], &block)
+    return if tree.nil?
+
+    inorder(tree.left_child, arr, &block)
+    yield tree if block_given?
+    arr << tree.data
+    inorder(tree.right_child, arr, &block)
+    arr
+  end
 end
 
 arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 
 tree = Tree.new(arr)
-tree.pretty_print
 
-tree.level_order { |node| puts node.data}
+#p tree.pretty_print
 
+tree.inorder {|num| puts num.data * 2}
+#tree.level_order { |node| puts node.data}
 # tree.insert(tree.root, 30)
 # tree.delete(tree.root, 3)
 # p tree.find(tree.root, 67)
