@@ -110,6 +110,26 @@ class Tree
     inorder(tree.right_child, arr, &block)
     arr
   end
+
+  def preorder(tree = @root, arr = [], &block)
+    return if tree.nil?
+
+    yield tree if block_given?
+    arr << tree.data
+    preorder(tree.left_child, arr, &block)
+    preorder(tree.right_child, arr, &block)
+    arr
+  end
+
+  def postorder(tree = @root, arr = [], &block)
+    return if tree.nil?
+
+    postorder(tree.left_child, arr, &block)
+    postorder(tree.right_child, arr, &block)
+    yield tree if block_given?
+    arr << tree.data
+    arr
+  end
 end
 
 arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
@@ -117,8 +137,6 @@ arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 tree = Tree.new(arr)
 
 #p tree.pretty_print
-
-tree.inorder {|num| puts num.data * 2}
 #tree.level_order { |node| puts node.data}
 # tree.insert(tree.root, 30)
 # tree.delete(tree.root, 3)
