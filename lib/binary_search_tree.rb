@@ -9,7 +9,7 @@ class Tree
   end
 
   def build_tree(array)
-    return nil if array.empty?
+    return if array.empty?
 
     root = Node.new(array[array.size / 2])
     root.left_child = build_tree(array[0...array.size / 2])
@@ -130,14 +130,17 @@ class Tree
     arr << tree.data
     arr
   end
+
+  def height(node)
+    return 1 if node.nil? || node.left_child.nil? || node.right_child.nil?
+
+    l_height = height(node.left_child)
+    r_height = height(node.right_child)
+
+    if l_height > r_height
+      l_height + 1
+    else
+      r_height + 1
+    end
+  end
 end
-
-arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
-
-tree = Tree.new(arr)
-
-#p tree.pretty_print
-#tree.level_order { |node| puts node.data}
-# tree.insert(tree.root, 30)
-# tree.delete(tree.root, 3)
-# p tree.find(tree.root, 67)
