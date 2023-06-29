@@ -143,4 +143,18 @@ class Tree
       r_height + 1
     end
   end
+
+  def depth(node, root = @root, dist = 0)
+    return -1 if root.nil?
+
+    if node.data < root.data
+      dist += 1
+      depth(node, root.left_child, dist)
+    elsif node.data > root.data
+      dist += 1
+      depth(node, root.right_child, dist)
+    else
+      dist
+    end
+  end
 end
