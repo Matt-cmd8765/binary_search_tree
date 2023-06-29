@@ -157,4 +157,25 @@ class Tree
       dist
     end
   end
+
+  def balanced?
+    tree = @root
+    left_side = self.height(tree.left_child)
+    right_side = self.height(tree.right_child)
+
+    if left_side == right_side || left_side - right_side <= 1 || left_side - right_side <= -1
+      puts 'Balanced!'
+      true
+    else
+      puts 'Not balanced :('
+      false
+    end
+  end
+
+  def rebalance
+    return unless !self.balanced?
+
+    balancedtree = self.sort.uniq
+    balancedtree
+  end
 end
